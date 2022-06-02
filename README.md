@@ -20,3 +20,17 @@ Build a testing application for comparing (using backtesting) various predictive
 	- X(t) - X(t-2)
 	- Y = alpha + beta_1 * (Z(1)) + beta_2 * Z(2) +…beta_n ( Z(n))
 	- # of days to build dataset? (90 days if possible)
+	
+
+## Tasks - 
+
+ - Facebook Prophet model -- Patrick
+ - LSTM  -- Ramana
+ - Linear Regression EMA RSI -- Vasyl
+ - Cross Validation - Tunde 
+ - user input for Ticker symbol -- Ramana
+ -  list of ticker symbols - Tunde
+ - Mean squared error for each ticker for actual vs predicted  - Tunde 
+ - validate ticker symbol -- Ramana
+ - Visualizations  - 
+ -  New machine learning module - Vasyl
