@@ -240,7 +240,9 @@ def get_max_regularizer_predict(X_train, y_train, X_test, y_test, idx_test, alph
     
     
 def compute_weights(df, num_portfolios = 10 ** 5):
-    
+    '''
+	compute weights for simulated portfolios
+    '''    
     p_ret = [] # Define an empty array for portfolio returns
     p_vol = [] # Define an empty array for portfolio volatility
     p_weights = [] # Define an empty array for asset weights
@@ -310,7 +312,8 @@ def plot_portfolios(portfolios, max_sharpe_port, min_vol_port):
                 alpha=1,
                 edgecolors='black',
                 grid=True,
-                ax=ax
+                ax=ax,
+                title='Simulated Portfolio Performance'
                 )
     plt.scatter(min_vol_port[1], 
             min_vol_port[0], 
