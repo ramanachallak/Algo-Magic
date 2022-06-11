@@ -11,7 +11,8 @@ conda install -c conda-forge python-dotenv -y
 conda install -c anaconda nb_conda -y  
 conda install -c plotly plotly -y  
 conda install -c conda-forge jupyterlab=2.2 -y  
-conda install -c anaconda numpy==1.19 -y  
+conda install -c anaconda numpy==1.19 -y   
+conda install -c conda-forge tensorflow
 conda install -c conda-forge matplotlib==3.0.3 -y  
 jupyter labextension install @jupyter-widgets/jupyterlab-manager --no-build  
 jupyter labextension install jupyterlab-plotly --no-build  
