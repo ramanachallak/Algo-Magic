@@ -1,7 +1,7 @@
 # Algo-Magic
 Repository for Project#2. 
 
-![Presentation](https://docs.google.com/presentation/d/1jt22KW9XMFdkfEoSn266YJJoJ0A-qkN3V7hcapGceZ4/edit#slide=id.g133b8366e19_0_49)
+[Presentation](https://docs.google.com/presentation/d/1jt22KW9XMFdkfEoSn266YJJoJ0A-qkN3V7hcapGceZ4/edit#slide=id.g133b8366e19_0_49)
 
 
 # Facebook Prophet model
