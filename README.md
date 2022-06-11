@@ -49,6 +49,14 @@ Results of Forecasting
 ![goog_forecasted](images/goog_forecasted.png) 
 ![tsla_forecasted](images/tsla_forecasted.png)
 
+
+# Linear Regression - HMA, RSI, MACD 
+- We can use today technical indicators such as RSI (30, 200), HMA, MACD to predict the future price.
+- The feature of the time series for stock prices is the high autocorrelation.
+- High autocorrelation is the reason for overfitting in this particular model.
+
+
+
 # Monte Carlo Cross - Validation (Shuffle Split) on LSTM
 Data set was randomly partitioned into training and validation sets (70% training/20% validation/10% not used). We also split the data 20 times. 
 
