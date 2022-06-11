@@ -55,6 +55,10 @@ Results of Forecasting
 - The feature of the time series for stock prices is the high autocorrelation.
 - High autocorrelation is the reason for overfitting in this particular model.
 
+![auto correlation.png](images/autocorrelation.png)
+![ols summary.png](images/ols_summary.png)
+![predicted_vs_true_portfolio.png](images/predicted_vs_true_portfolio.png)
+![simulated_portfolios.png](images/simulated_portfolios.png)
 
 
 # Monte Carlo Cross - Validation (Shuffle Split) on LSTM
