@@ -1,7 +1,9 @@
-# Algo-Magic
+# Time Series Data Forcasting
 Repository for Project#2. 
 
 [Presentation](https://docs.google.com/presentation/d/1jt22KW9XMFdkfEoSn266YJJoJ0A-qkN3V7hcapGceZ4/edit#slide=id.g133b8366e19_0_49)
+
+The stock market has always been an enigma. Analysts, investors and traders have always sought to predict the market. We set out to build a stock market predictor to properly track and predict the market using machine learning.
 
 
 # Facebook Prophet model
@@ -31,11 +33,29 @@ We determine Best Case, Worst Case and Most Likely Case for each symbol. In our 
 
 ![tsla_forecast](images/tsla_forecast.png)
 
+# LSTM - Long Short-Term Memory Networks
 
+LSTM - Long Short-Term Memory network a variation of recurrent neural networks, is an efficient model for predicting long sequences of data. LSTM works with a feedback loop within it's architecture, which sets it aside from normal feedforward networks, which also makes it efficient in predicting long sequencential data.
 
+Results of Predictions
 
+![msft_predicted](images/msft_predicted.png)
+![goog_predicted](images/goog_predicted.png) 
+![tsla_predicted](images/tsla_predicted.png)
 
+Results of Forecasting 
 
+![msft_forecasted](images/msft_forecasted.png)
+![goog_forecasted](images/goog_forecasted.png) 
+![tsla_forecasted](images/tsla_forecasted.png)
+
+# Monte Carlo Cross - Validation (Shuffle Split) on LSTM
+Data set was randomly partitioned into training and validation sets (70% training/20% validation/10% not used). We also split the data 20 times. 
+
+# Final Takeaways and Improvements
+- Using FB Prophet is an adequate solution for unsophisticated investors to forecast prices in the future. Due to its ease to setup and understand.
+- Using larger data set would likely give better results. 
+- Time Series with high level of autocorrelation are difficult to forecast reliably, because the best prediction for the nearest future is today's value.  Therefore, it might be a better strategy to use signals to trigger buy/sell events. 
 
 
 
