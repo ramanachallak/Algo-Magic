@@ -310,7 +310,8 @@ def plot_portfolios(portfolios, max_sharpe_port, min_vol_port):
                 alpha=1,
                 edgecolors='black',
                 grid=True,
-                ax=ax
+                ax=ax,
+                title='Simulated Portfolio Performance'
                 )
     plt.scatter(min_vol_port[1], 
             min_vol_port[0], 
