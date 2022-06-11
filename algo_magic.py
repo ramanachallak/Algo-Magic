@@ -26,6 +26,10 @@ warnings.filterwarnings("ignore")
 
 
 def prepare_data_method_all(df, close_name):
+    """
+    Takes dataframe with closing prices for set of tickers and creates an array
+    with technical indicators together as feature vector and target vector.
+    """
     
     my_df = df.ta.macd(close=close_name,fast=8, slow=21)
     my_df = my_df[['MACD_8_21_9']]
@@ -45,6 +49,11 @@ def prepare_data_method_all(df, close_name):
     return (X, y, y_signal)
 
 def prepare_data_method_1(df, close_name="close"):
+    """
+    Takes dataframe with closing price for a tickers and creates an array
+    with technical indicators together as feature vector and target vector.
+    """
+    
     
     df.ta.rsi(close=close_name, length=30, append=True)
     df.ta.rsi(close=close_name, length=200, append=True)
@@ -65,6 +74,9 @@ def prepare_data_method_1(df, close_name="close"):
 
 
 def train_test_split_ts(X, y, y_signal, alpha=0.7):
+    """
+    Creates train-test split for Timeseries
+    """
     split = int(alpha * len(X))
 
     X_train = X[:split]
@@ -83,6 +95,10 @@ def train_test_split_ts(X, y, y_signal, alpha=0.7):
 
 
 def ols_predict_price(X_train, y_train, X_test, y_test, idx_test):
+    """
+    Predict prices for OLS model based on technical indicators
+    """
+    
     model = sm.OLS(y_train, sm.add_constant(X_train))
     results = model.fit()
 
@@ -102,6 +118,9 @@ def ols_predict_price(X_train, y_train, X_test, y_test, idx_test):
     
     
 def ols_regularized_predict_price(X_train, y_train, X_test, y_test, idx_test, alpha=1, l1_wt=1):
+    """
+    Predict prices for regularized OLS model based on technical indicators
+    """
     
     model = sm.OLS(y_train, sm.add_constant(X_train))
 
@@ -119,31 +138,30 @@ def ols_regularized_predict_price(X_train, y_train, X_test, y_test, idx_test, al
     
     
 def compute_signal_strategy_1(y):
-    
+    """
+    Compute signal for a strategy 1: If our prediction is that the price is goint to increase next day, 
+    we buy stock in the morning and sell it at the end fo the day.
+    """
     y_next_day = y.shift(-1)
 
     y_signal = (y < y_next_day).astype(int)
     y_signal = y_signal[:-1]
-    # y_pred = y_pred.ravel()
-    # y_next_day = y_pred[1:]
-    # y_signal = (y_next_day > y_pred[:-1]).astype(int)
 
     return y_signal
 
     
     
 def compute_profit_strategy_1(y_true, y_pred):
-    
-    # y_next_day = y_pred.shift(-1)
+    """
+    Compute profit for a strategy 1: If our prediction is that the price is goint to increase next day, 
+    we buy stock in the morning and sell it at the end fo the day.
+    """
 
-    # y_signal = (y_pred < y_pred.shift(-1)).astype(int)
-    # y_signal = y_signal[:-1]
     y_true = y_true.ravel()
     y_next_day = y_true[1:]
     y_signal  = compute_signal_strategy_1(y_pred)
 
     profit = (y_next_day - y_true[:-1]) * y_signal
-    # profit = profit.dropna()
     
     return profit
 
@@ -151,6 +169,9 @@ def compute_profit_strategy_1(y_true, y_pred):
     
 def sk_regularizer_predict(X_train, y_train, X_test, y_test, idx_test, alpha=1, l1_wt=1):
 
+    """
+    get prediction for regularized model.
+    """
     model = ElasticNet(alpha=alpha, l1_ratio=l1_wt)
 
     # Train the model
@@ -164,28 +185,13 @@ def sk_regularizer_predict(X_train, y_train, X_test, y_test, idx_test, alpha=1, 
     
     df_reg_pred['regularized_pred'] = y_reg_pred
     df_reg_pred['true'] = y_test
-    # df_reg_pred['next_day'] = df_reg_pred['true'].shift(-1)
     
     # compute signals
-    # y_true_signal = (df_reg_pred['true'] < df_reg_pred['true'].shift(-1)).astype(int)
-    # y_true_signal = y_true_signal[:-1]
     y_true_signal = compute_signal_strategy_1(df_reg_pred['true'])
     
-    # y_reg_signal = (df_reg_pred['regularized_pred'] < df_reg_pred['regularized_pred'].shift(-1)).astype(int)
-    # y_reg_signal = y_reg_signal[:-1]
     y_reg_signal = compute_signal_strategy_1(df_reg_pred['regularized_pred'])
 
-    # df_signal = pd.DataFrame(index=y_reg_signal.index)
-    # df_signal['signal'] = y_reg_signal
-    
-     # compute profit
-#     idx_trade = df_signal[df_signal['signal'] == 1].index
-#     current_profit = (df_reg_pred['next_day'].loc[idx_trade] - df_reg_pred['true'].loc[idx_trade]).sum()
-    
-#     profit = (df_reg_pred['next_day'] - df_reg_pred['true']) * df_signal['signal']
-#     profit = profit.dropna()
-    
-
+    # compute profit
     
     profit = compute_profit_strategy_1(df_reg_pred['true'], df_reg_pred['regularized_pred'])
     cum_profit = profit.sum()
@@ -199,7 +205,9 @@ def sk_regularizer_predict(X_train, y_train, X_test, y_test, idx_test, alpha=1, 
 
 
 def get_max_regularizer_predict(X_train, y_train, X_test, y_test, idx_test, alphas, l1s):
-
+    """
+    Get the best set of parameters for regularized model.
+    """
     test_acc_df = pd.DataFrame(columns=['alpha',
                                     'l1wt',
                                     'accuracy',
@@ -287,6 +295,10 @@ def compute_weights(df, num_portfolios = 10 ** 5):
 
 def plot_portfolios(portfolios, max_sharpe_port, min_vol_port):
     
+    """
+    Plot the best portfolio according to the Sharpe ratio value
+    """
+    
     fig, ax = plt.subplots(figsize=[20,10])
     portfolios.plot(kind='scatter',
                 x='Volatility',
@@ -316,6 +328,4 @@ def plot_portfolios(portfolios, max_sharpe_port, min_vol_port):
             label='Max Sharpe Ratio'
            )
     plt.legend(loc='best')
-    # x_values = [0, max_sharpe_port[1]]
-    # y_values = [0, max_sharpe_port[0]]
-    # plt.plot(x_values, y_values, 'bo', linestyle="--")
+   
